@@ -72,7 +72,6 @@
   object-fit: cover;
   background-position: center;
   margin-right: 30px;
-  object-fit: cover;
 }
 
 @media screen and (max-width: 770px) {
