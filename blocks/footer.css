@@ -1,9 +1,7 @@
 .footer {
   display: flex;
   max-width: 880px;
-  justify-content: flex-start;
   margin: auto;
-  flex-wrap: wrap;
 }
 
 .footer__title {
@@ -15,6 +13,10 @@
   color: #545454;
   padding-top: 67px;
   padding-bottom: 60px;
-  width: 318px;
-  height: 18px;
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    max-width: 282px;
+  }
 }
