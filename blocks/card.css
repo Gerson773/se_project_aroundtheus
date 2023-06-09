@@ -41,6 +41,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 0;
 }
 
 .card__like-button {
@@ -49,6 +50,7 @@
   height: 18px;
   border: none;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .card__like-button:hover {
