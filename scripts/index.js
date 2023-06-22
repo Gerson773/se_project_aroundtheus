@@ -25,6 +25,8 @@ const initialCards = [
   },
 ];
 
+/*Elements*/
+
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileCloseButton = document.querySelector("#profile-close-button");
@@ -36,24 +38,48 @@ const profileDescriptionInput = document.querySelector(
 );
 
 const profileEditForm = profileEditModal.querySelector(".modal__form");
+const cardListEL = document.querySelector(".card");
+const cardTemplate =
+  document.querySelector("#card-template").content.firstElementChild;
+
+/* Functions*/
 
 function closePopup() {
   profileEditModal.classList.remove("modal__opened");
 }
 
-profileEditButton.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal__opened");
-});
+function getCardElement(cardData) {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardImageEl = cardElement.querySelector(".card__image");
+  const cardTitleEl = cardElement.querySelector(".card__title");
 
-profileCloseButton.addEventListener("click", () => {
-  closePopup();
-});
+  cardElement.querySelector(".card__image").src = cardData.link;
+  cardTitleEl.textContent = cardData.name;
+  return cardElement;
+}
 
-profileEditForm.addEventListener("submit", (evt) => {
+/*Event Handlers*/
+
+function handleProfileEditSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup();
+}
+
+/*Event Listeners*/
+
+profileEditButton.addEventListener("click", () => {
+  profileTitleInput.value = profileTitle.textContent.trim();
+  profileDescriptionInput.value = profileDescription.textContent.trim();
+  profileEditModal.classList.add("modal__opened");
+});
+
+profileCloseButton.addEventListener("click", closePopup);
+
+profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+
+initialCards.forEach((cardData) => {
+  const cardElement = getCardElement(cardData);
+  cardListEL.append(cardElement);
 });

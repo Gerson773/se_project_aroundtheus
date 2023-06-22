@@ -87,21 +87,22 @@
   border-left: none;
   border-right: none;
   padding-bottom: 13.26px;
-
 }
 
 .modal__input::placeholder {
-  font-style: Inter, Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 16.94px;
   color: #000;
   margin: 0;
+}
 
 @media screen and (max-width: 635px) {
   .modal__container {
-    width: 282px;
-    height: 322px;
+    width: 100%;
+    max-width: 282px;
+    max-height: 322px;
     padding: 0;
   }
 
@@ -113,18 +114,19 @@
   }
   .modal__form {
     margin: auto;
-    padding-bottom: 75px;
   }
   .modal__button {
+    width: 100%;
     max-width: 238px;
-    height: 46px;
+    max-height: 46px;
     margin-left: 22px;
     margin-right: 22px;
+    margin-bottom: 25px;
   }
 
   .modal__input {
     max-width: 238px;
-    margin-bottom: 45;
+    margin-bottom: 45px;
     margin-left: 22px;
   }
 
