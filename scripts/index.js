@@ -63,7 +63,7 @@ const cardLinkInput = addCardFormElement.querySelector(
 function closePopup() {
   profileEditModal.classList.remove("modal_opened");
   addCardModal.classList.remove("modal_opened");
-  closePreviewButton.classList.remove("modal_opened");
+  previewImageModal.classList.remove("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -73,9 +73,11 @@ function getCardElement(cardData) {
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
   const deleteButton = cardElement.querySelector(".card__delete-button");
+  const previewText = previewImageModal.querySelector(".modal__preview-title");
 
   cardImageEl.addEventListener("click", () => {
     imgEL.src = cardData.link;
+    previewText.textContent = cardData.name;
     previewImageModal.classList.add("modal_opened");
   });
 
