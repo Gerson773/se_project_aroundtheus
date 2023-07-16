@@ -169,6 +169,8 @@
   .profile__edit-button {
     margin-left: 10px;
     margin-top: 29px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
   }
 
   .profile__add-button {
