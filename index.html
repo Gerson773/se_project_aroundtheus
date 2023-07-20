@@ -66,9 +66,7 @@
             maxlength="40"
             required
           />
-          <span class="profile__error" id="profile-title-input-error"
-            >Error Goes Here</span
-          >
+          <span class="modal__error" id="profile-title-input-error"></span>
 
           <input
             type="text"
@@ -81,10 +79,17 @@
             required
           />
           <span
-            class="profile__error"
+            class="modal__error"
             id="profile-description-input-error"
           ></span>
-          <button class="button modal__button" type="submit">Save</button>
+
+          <button
+            class="button modal__button modal__button_disabled"
+            type="submit"
+            disabled
+          >
+            Save
+          </button>
         </form>
       </div>
     </div>
@@ -108,7 +113,13 @@
             class="modal__input modal__input_type_link"
             id="profile-description-input-add-card"
           />
-          <button class="button modal__button" type="submit">Create</button>
+          <button
+            class="button modal__button modal__button_disabled"
+            type="submit"
+            disabled
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>
