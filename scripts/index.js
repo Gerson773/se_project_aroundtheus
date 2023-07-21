@@ -37,6 +37,7 @@ const addCardFormElement = addCardModal.querySelector(".modal__form");
 const cardListEL = document.querySelector(".card");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+const popups = document.querySelectorAll(".modal");
 
 /* Buttons Elements */
 const profileCloseButton = document.querySelector("#profile-close-button");
@@ -107,6 +108,17 @@ function renderCard(cardData, cardListEL) {
   const cardElement = getCardElement(cardData);
   cardListEL.prepend(cardElement);
 }
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+  document.addEventListener("keydown", escapePopup);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", escapePopup);
+}
+
 /*Event Handlers*/
 
 function handleProfileEditSubmit(evt) {
@@ -150,3 +162,20 @@ profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
+
+const handleClosePopup = (evt) => {
+  if (evt.target.classList.contains("modal_opened")) {
+    closePopup(evt.currentTarget);
+  }
+};
+
+popups.forEach((popup) => {
+  popup.addEventListener("mousedown", handleClosePopup);
+});
+
+function escapePopup(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = documet.querySelector(".modal_opened");
+    closePopup(openedModal);
+  }
+}

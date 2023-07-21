@@ -110,6 +110,12 @@
   opacity: 0.8;
 }
 
+.modal__button_disabled {
+  border-color: rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.2);
+}
+
 .modal__input {
   width: 100%;
   max-width: 358px;
