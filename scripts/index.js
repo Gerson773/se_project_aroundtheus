@@ -63,10 +63,12 @@ const cardLinkInput = addCardFormElement.querySelector(
 
 function openPopup(popup) {
   popup.classList.add("modal_opened");
+  document.addEventListener("keydown", escapePopup);
 }
 
 function closePopup(popup) {
   popup.classList.remove("modal_opened");
+  document.removeEventListener("keydown", escapePopup);
 }
 
 function getCardElement(cardData) {
@@ -107,16 +109,6 @@ closePreviewButton.addEventListener("click", () =>
 function renderCard(cardData, cardListEL) {
   const cardElement = getCardElement(cardData);
   cardListEL.prepend(cardElement);
-}
-
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keydown", escapePopup);
-}
-
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", escapePopup);
 }
 
 /*Event Handlers*/
@@ -175,7 +167,7 @@ popups.forEach((popup) => {
 
 function escapePopup(evt) {
   if (evt.key === "Escape") {
-    const openedModal = documet.querySelector(".modal_opened");
+    const openedModal = document.querySelector(".modal_opened");
     closePopup(openedModal);
   }
 }
