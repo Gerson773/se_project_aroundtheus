@@ -155,14 +155,14 @@ addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
-const handleClosePopup = (evt) => {
+const handleClosePopupWithOutsideClick = (evt) => {
   if (evt.target.classList.contains("modal_opened")) {
     closePopup(evt.currentTarget);
   }
 };
 
 popups.forEach((popup) => {
-  popup.addEventListener("mousedown", handleClosePopup);
+  popup.addEventListener("mousedown", handleClosePopupWithOutsideClick);
 });
 
 function escapePopup(evt) {
