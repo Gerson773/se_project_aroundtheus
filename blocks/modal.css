@@ -91,6 +91,10 @@
   cursor: pointer;
 }
 
+.modal__close:hover {
+  opacity: 0.8;
+}
+
 .modal__button {
   font-family: Inter, Arial, sans-serif;
   font-weight: 400;
@@ -104,6 +108,8 @@
   border-radius: 2px;
   margin-left: 36px;
   margin-right: 36px;
+  border: none;
+  cursor: pointer;
 }
 
 .modal__button:hover {
