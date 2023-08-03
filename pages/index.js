@@ -164,7 +164,7 @@ cardCloseButton.addEventListener("click", () => closePopup(addCardModal));
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
-// initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
+initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 const handleClosePopupWithOutsideClick = (evt) => {
   if (evt.target.classList.contains("modal_opened")) {
