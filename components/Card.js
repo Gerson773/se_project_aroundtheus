@@ -1,7 +1,3 @@
-//const previewImageModal = document.querySelector("#preview-image-modal");
-//const imgEL = previewImageModal.querySelector(".modal__image");
-//const previewText = previewImageModal.querySelector(".modal__preview-title");
-
 class Card {
   constructor({ name, link }, cardSelector) {
     this._name = name;
