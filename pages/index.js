@@ -46,7 +46,7 @@ card.getView();
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const addCardModal = document.querySelector("#add-card-modal");
-//const previewImageModal = document.querySelector("#preview-image-modal");
+const previewImageModal = document.querySelector("#preview-image-modal");
 const profileTitle = document.querySelector("#profile-title");
 const profileDescription = document.querySelector("#profile-description");
 const profileEditForm = profileEditModal.querySelector(".modal__form");

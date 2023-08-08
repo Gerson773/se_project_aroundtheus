@@ -5,6 +5,11 @@ import {
   escapePopup,
 } from "../utils/utils.js";
 
+const previewImageModal = document.querySelector("#preview-image-modal");
+const imgEL = document.querySelector(".modal__image");
+const previewText = document.querySelector(".modal__preview-title");
+const cardImageEl = document.querySelector(".card__image");
+
 class Card {
   constructor({ name, link }, cardSelector) {
     this._name = name;
@@ -25,9 +30,15 @@ class Card {
         this._handleDeleteCard();
       });
 
+    //this._cardElement
+    //.querySelector(".card__image")
+    //.addEventListener("click", this._handlePreviewPicture);
+
     this._cardElement
       .querySelector(".card__image")
-      .addEventListener("click", this._handlePreviewPicture);
+      .addEventListener("click", () => {
+        this._handlePreviewPicture();
+      });
   }
 
   _handleLikeIcon() {
@@ -42,8 +53,8 @@ class Card {
   }
 
   _handlePreviewPicture() {
-    this._cardElement.src = this._link;
-    this._cardElement.alt = this._name;
+    imgEL.src = this._link;
+    imgEL.alt = this._name;
     previewText.textContent = this._name;
     openPopup(previewImageModal);
   }

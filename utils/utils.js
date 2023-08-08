@@ -1,11 +1,4 @@
 export function openPopup(popup) {
-  const previewImageModal = this._cardElement.querySelector(
-    "#preview-image-modal"
-  );
-  const imgEL = this._cardElement.querySelector(".modal__image");
-  const previewText = this._cardElement.querySelector(".modal__preview-title");
-  const cardImageEl = this._cardElement.querySelector(".card__image");
-
   popup.classList.add("modal_opened");
   document.addEventListener("keydown", escapePopup);
 }
