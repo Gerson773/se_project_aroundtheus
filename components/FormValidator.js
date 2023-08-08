@@ -5,7 +5,32 @@ class FormValidator {
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._inputErrorClass = settings.inputErrorClass;
     this._errorClass = settings.errorClass;
+    this._inputEls = [
+      ...this._formElement.querySelectorAll(this._inputSelector),
+    ];
     this._form = formElement;
+  }
+
+  _showInputError(inputEls) {
+    const errorMessageEl = this.formElement.querySelector(
+      `#${inputEls.id}-error`
+    );
+  }
+
+  _hideInputError(inputEls) {
+    errorMessageEl.textContent = inputEls.validationMessage;
+  }
+
+  _checkFormValidity() {
+    return this._inputEls.every((input) => input.validity.valid);
+  }
+
+  _checkInputValidity() {
+    if (!inputEls.validity.valid) {
+      this._showInputError(inputEls);
+    } else {
+      this._hideInputError(inputEls);
+    }
   }
 
   _toggleButtonState(inputEls) {
@@ -42,8 +67,7 @@ class FormValidator {
   }
 }
 
-const settings = {
-  formSelector: ".modal__form",
+const config = {
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button",
   inactiveButtonClass: "modal__button_disabled",

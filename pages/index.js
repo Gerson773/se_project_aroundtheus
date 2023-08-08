@@ -90,14 +90,22 @@ const cardLinkInput = addCardFormElement.querySelector(
 
 const cardSelector = "#card-template";
 
-//const editFormValidator = new FormValidator();
-//editFormValidator.enableValidation();
+/*Form Validation*/
+
+const editFormElement = profileEditModal.querySelector(".modal__form");
+const addFormElement = addCardModal.querySelector(".modal__form");
+
+const editFormValidator = new FormValidator(settings, editFormElement);
+const addFormValidator = new FormValidator(settings, addFormElement);
+
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 //function getCardElement(cardData) {
 //const cardElement = cardTemplate.cloneNode(true);
 //const cardImageEl = cardElement.querySelector(".card__image");
 //const imgEL = previewImageModal.querySelector(".modal__image");
-//  const cardTitleEl = cardElement.querySelector(".card__title");
+//const cardTitleEl = cardElement.querySelector(".card__title");
 //  const likeButton = cardElement.querySelector(".card__like-button");
 //  const deleteButton = cardElement.querySelector(".card__delete-button");
 //const previewText = previewImageModal.querySelector(".modal__preview-title");
@@ -150,6 +158,8 @@ function handleAddCardFormSubmit(evt) {
   getView({ name, link }, cardListEL);
   evt.target.reset();
   closePopup(addCardModal);
+
+  editFormValidator.togglesButtonState();
 }
 
 /*Event Listeners*/
