@@ -1,3 +1,10 @@
+import {
+  openPopup,
+  closePopup,
+  handleClosePopupWithOutsideClick,
+  escapePopup,
+} from "../utils/utils.js";
+
 class Card {
   constructor({ name, link }, cardSelector) {
     this._name = name;
@@ -34,7 +41,12 @@ class Card {
     this._cardElement = null;
   }
 
-  _handlePreviewPicture() {}
+  _handlePreviewPicture() {
+    this._cardElement.src = this._link;
+    this._cardElement.alt = this._name;
+    previewText.textContent = this._name;
+    openPopup(previewImageModal);
+  }
 
   getView() {
     this._cardElement = document
