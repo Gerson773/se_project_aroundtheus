@@ -2,7 +2,7 @@ import {
   openPopup,
   closePopup,
   handleClosePopupWithOutsideClick,
-  escapePopup,
+  handleEscape,
 } from "../utils/utils.js";
 
 const previewImageModal = document.querySelector("#preview-image-modal");

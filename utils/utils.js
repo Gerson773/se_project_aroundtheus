@@ -1,11 +1,11 @@
 export function openPopup(popup) {
   popup.classList.add("modal_opened");
-  document.addEventListener("keydown", escapePopup);
+  document.addEventListener("keydown", handleEscape);
 }
 
 export function closePopup(popup) {
   popup.classList.remove("modal_opened");
-  document.removeEventListener("keydown", escapePopup);
+  document.removeEventListener("keydown", handleEscape);
 }
 
 export function handleClosePopupWithOutsideClick(evt) {
@@ -14,7 +14,7 @@ export function handleClosePopupWithOutsideClick(evt) {
   }
 }
 
-export function escapePopup(evt) {
+export function handleEscape(evt) {
   if (evt.key === "Escape") {
     const openedModal = document.querySelector(".modal_opened");
     closePopup(openedModal);
