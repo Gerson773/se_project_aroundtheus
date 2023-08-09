@@ -92,6 +92,14 @@ const cardSelector = "#card-template";
 
 /*Form Validation*/
 
+const settings = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 const editFormElement = profileEditModal.querySelector(".modal__form");
 const addFormElement = addCardModal.querySelector(".modal__form");
 
@@ -149,17 +157,19 @@ function handleProfileEditSubmit(evt) {
   profileDescription.textContent = profileDescriptionInput.value;
   evt.target.reset();
   closePopup(profileEditModal);
+
+  editFormValidator.toggleButtonState();
 }
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   const name = cardTitleInput.value;
   const link = cardLinkInput.value;
-  getView({ name, link }, cardListEL);
+  renderCard({ name, link }, cardListEL);
   evt.target.reset();
   closePopup(addCardModal);
 
-  editFormValidator.togglesButtonState();
+  addFormValidator.toggleButtonState();
 }
 
 /*Event Listeners*/
