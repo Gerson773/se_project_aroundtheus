@@ -30,4 +30,4 @@ export const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-export const cardListSelector = "#add-card-modal";
+export const cardListSelector = ".card";

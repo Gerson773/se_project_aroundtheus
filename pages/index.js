@@ -3,7 +3,11 @@
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards, cardListSelector } from "../utils/constants.js";
+import {
+  initialCards,
+  cardListSelector,
+  cardData,
+} from "../utils/constants.js";
 import {
   openPopup,
   closePopup,
