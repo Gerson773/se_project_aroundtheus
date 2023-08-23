@@ -1,9 +1,5 @@
-// All imports
-
-import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards, cardListSelector } from "../utils/constants.js";
 import {
   openPopup,
   closePopup,
@@ -11,8 +7,40 @@ import {
   handleEscape,
 } from "../utils/utils.js";
 
-// Elements From Original index.js
+const initialCards = [
+  {
+    name: "Yosemite Valley",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+  },
+];
 
+const cardData = {
+  name: "Yosemite Valley",
+
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
+
+/*Elements*/
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const addCardModal = document.querySelector("#add-card-modal");
@@ -72,20 +100,12 @@ closePreviewButton.addEventListener("click", () =>
   closePopup(previewImageModal)
 );
 
-// New Sections To Render Card
+/*Functions*/
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const newCard = new Card(cardData, "#card-template");
-      cardSection.addItem(newCard.getView());
-    },
-  },
-  cardListSelector
-);
-
-cardSection.renderItems();
+function renderCard(cardData, cardListEL) {
+  const card = new Card(cardData, cardSelector);
+  cardListEL.prepend(card.getView());
+}
 
 /*Event Handlers*/
 
@@ -130,6 +150,8 @@ cardCloseButton.addEventListener("click", () => closePopup(addCardModal));
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
+
+initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", handleClosePopupWithOutsideClick);

@@ -30,10 +30,6 @@ class Card {
         this._handleDeleteCard();
       });
 
-    //this._cardElement
-    //.querySelector(".card__image")
-    //.addEventListener("click", this._handlePreviewPicture);
-
     this._cardElement
       .querySelector(".card__image")
       .addEventListener("click", () => {
