@@ -110,9 +110,19 @@ closePreviewButton.addEventListener("click", () =>
 
 // functions
 
-function renderCard(cardData, cardListEL) {
+// function renderCard(cardData, cardListEL) {
+//   const card = new Card(cardData, cardSelector, handleCardClick);
+//   cardListEL.prepend(card.getView());
+// }
+
+function createCard(cardData) {
   const card = new Card(cardData, cardSelector, handleCardClick);
-  cardListEL.prepend(card.getView());
+  return card.getView();
+}
+
+function renderCard(cardData) {
+  const cardEl = createCard(cardData);
+  cardListEL.prepend(cardEl);
 }
 
 //Popup Const
@@ -130,7 +140,7 @@ const cardSection = new Section(
   {
     items: initialCards,
     renderer: (cardData) => {
-      const newCard = new Card(cardData, "#card-template");
+      const newCard = new Card(cardData, "#card-template", handleCardClick);
       cardSection.addItem(newCard.getView());
     },
   },
