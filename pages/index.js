@@ -3,20 +3,46 @@
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import {
-  initialCards,
-  cardListSelector,
-  cardData,
-} from "../utils/constants.js";
-import {
-  openPopup,
-  closePopup,
-  handleClosePopupWithOutsideClick,
-  handleEscape,
-} from "../utils/utils.js";
+import Popup from "../components/Popup.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage";
 
-// Elements From Original index.js
+const cardData = {
+  name: "Yosemite Valley",
 
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
+
+const initialCards = [
+  {
+    name: "Yosemite Valley",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+  },
+];
+
+// Original Elements
+
+/*Elements*/
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const addCardModal = document.querySelector("#add-card-modal");
@@ -76,21 +102,6 @@ closePreviewButton.addEventListener("click", () =>
   closePopup(previewImageModal)
 );
 
-// New Sections To Render Card
-
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const newCard = new Card(cardData, "#card-template");
-      cardSection.addItem(newCard.getView());
-    },
-  },
-  cardListSelector
-);
-
-cardSection.renderItems();
-
 /*Event Handlers*/
 
 function handleProfileEditSubmit(evt) {
@@ -138,3 +149,37 @@ addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", handleClosePopupWithOutsideClick);
 });
+
+// Popups
+
+const cardPopup = PopupWithImage({ popupSelector: "#preview-image-modal" });
+export const editProfilePopup = new PopupWithForm(
+  "#profile-edit-modal",
+  handleFormSubmit
+);
+
+export const newCardPopup = new PopupWithForm("#add-card-modal", (evt) => {
+  handleImageFormSubmit(evt, cardSection, cardPopup, () => {
+    newCardPopup.close();
+  });
+});
+cardPopup.setEventListeners();
+
+// New functions
+
+// New Sections To Render Card
+
+const cardListSelector = ".card";
+
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (cardData) => {
+      const newCard = new Card(cardData, "#card-template");
+      cardSection.addItem(newCard.getView());
+    },
+  },
+  cardListSelector
+);
+
+cardSection.renderItems();

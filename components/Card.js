@@ -1,20 +1,15 @@
-import {
-  openPopup,
-  closePopup,
-  handleClosePopupWithOutsideClick,
-  handleEscape,
-} from "../utils/utils.js";
-
-const previewImageModal = document.querySelector("#preview-image-modal");
-const imgEL = document.querySelector(".modal__image");
-const previewText = document.querySelector(".modal__preview-title");
-const cardImageEl = document.querySelector(".card__image");
-
 class Card {
-  constructor({ name, link }, cardSelector) {
-    this._name = name;
-    this._link = link;
+  constructor({ data, cardSelector }, handleCardClick) {
+    this._name = data.name;
+    this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
+
+    this._previewModal = document.querySelector("#preview-image-modal");
+    this._imgPreview = this._previewModal.querySelector(".modal__image");
+    this.imgPreviewTitle = this._previewModal.querySelector(
+      ".modal__preview-title"
+    );
   }
 
   _setEventListeners() {
@@ -48,12 +43,12 @@ class Card {
     this._cardElement = null;
   }
 
-  _handlePreviewPicture() {
-    imgEL.src = this._link;
-    imgEL.alt = this._name;
-    previewText.textContent = this._name;
-    openPopup(previewImageModal);
-  }
+  //_handlePreviewPicture() {
+  //  imgEL.src = this._link;
+  //  imgEL.alt = this._name;
+  //  previewText.textContent = this._name;
+  //  openPopup(previewImageModal);
+  // }
 
   getView() {
     this._cardElement = document
