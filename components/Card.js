@@ -1,15 +1,21 @@
+// // import {
+//   openPopup,
+//   closePopup,
+//   handleClosePopupWithOutsideClick,
+//   handleEscape,
+// } from "../utils/utils.js";
+
+// const previewImageModal = document.querySelector("#preview-image-modal");
+// const imgEL = document.querySelector(".modal__image");
+// const previewText = document.querySelector(".modal__preview-title");
+// const cardImageEl = document.querySelector(".card__image");
+
 class Card {
-  constructor({ data, cardSelector }, handleCardClick) {
-    this._name = data.name;
-    this._link = data.link;
+  constructor({ name, link }, cardSelector, handleCardClick) {
+    this._name = name;
+    this._link = link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-
-    this._previewModal = document.querySelector("#preview-image-modal");
-    this._imgPreview = this._previewModal.querySelector(".modal__image");
-    this.imgPreviewTitle = this._previewModal.querySelector(
-      ".modal__preview-title"
-    );
   }
 
   _setEventListeners() {
@@ -25,11 +31,15 @@ class Card {
         this._handleDeleteCard();
       });
 
-    this._cardElement
-      .querySelector(".card__image")
-      .addEventListener("click", () => {
-        this._handlePreviewPicture();
-      });
+    // this._cardElement
+    //   .querySelector(".card__image")
+    //   .addEventListener("click", () => {
+    //     this._handlePreviewPicture();
+    //   });
+
+    this._cardElement.addEventListener("click", () => {
+      this._handleCardClick(this._link, this._name);
+    });
   }
 
   _handleLikeIcon() {
@@ -43,11 +53,13 @@ class Card {
     this._cardElement = null;
   }
 
-  //_handlePreviewPicture() {
-  //  imgEL.src = this._link;
-  //  imgEL.alt = this._name;
-  //  previewText.textContent = this._name;
-  //  openPopup(previewImageModal);
+  //this preview is no longer needed
+
+  // _handlePreviewPicture() {
+  //   imgEL.src = this._link;
+  //   imgEL.alt = this._name;
+  //   previewText.textContent = this._name;
+  //   openPopup(previewImageModal);
   // }
 
   getView() {

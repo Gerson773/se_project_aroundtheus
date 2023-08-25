@@ -3,17 +3,19 @@
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
+import {
+  openPopup,
+  closePopup,
+  handleClosePopupWithOutsideClick,
+  handleEscape,
+} from "../utils/utils.js";
+
 import Popup from "../components/Popup.js";
-import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithImage from "../components/PopupWithImage";
+import PopupWithImage from "../components/PopupWithImage.js";
 
-const cardData = {
-  name: "Yosemite Valley",
+// Elements From Original index.js
 
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-};
-
-const initialCards = [
+export const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -40,9 +42,13 @@ const initialCards = [
   },
 ];
 
-// Original Elements
+export const cardData = {
+  name: "Yosemite Valley",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
 
-/*Elements*/
+export const cardListSelector = ".card";
+
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const addCardModal = document.querySelector("#add-card-modal");
@@ -102,6 +108,37 @@ closePreviewButton.addEventListener("click", () =>
   closePopup(previewImageModal)
 );
 
+// functions
+
+function renderCard(cardData, cardListEL) {
+  const card = new Card(cardData, cardSelector, handleCardClick);
+  cardListEL.prepend(card.getView());
+}
+
+//Popup Const
+
+const imagePreviewPopup = new PopupWithImage("#preview-image-modal");
+imagePreviewPopup.setEventListeners();
+
+function handleCardClick(name, link) {
+  imagePreviewPopup.open(name, link);
+}
+
+// New Sections To Render Card
+
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (cardData) => {
+      const newCard = new Card(cardData, "#card-template");
+      cardSection.addItem(newCard.getView());
+    },
+  },
+  cardListSelector
+);
+
+cardSection.renderItems();
+
 /*Event Handlers*/
 
 function handleProfileEditSubmit(evt) {
@@ -149,37 +186,3 @@ addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", handleClosePopupWithOutsideClick);
 });
-
-// Popups
-
-const cardPopup = PopupWithImage({ popupSelector: "#preview-image-modal" });
-export const editProfilePopup = new PopupWithForm(
-  "#profile-edit-modal",
-  handleFormSubmit
-);
-
-export const newCardPopup = new PopupWithForm("#add-card-modal", (evt) => {
-  handleImageFormSubmit(evt, cardSection, cardPopup, () => {
-    newCardPopup.close();
-  });
-});
-cardPopup.setEventListeners();
-
-// New functions
-
-// New Sections To Render Card
-
-const cardListSelector = ".card";
-
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const newCard = new Card(cardData, "#card-template");
-      cardSection.addItem(newCard.getView());
-    },
-  },
-  cardListSelector
-);
-
-cardSection.renderItems();
