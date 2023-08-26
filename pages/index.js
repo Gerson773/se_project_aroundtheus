@@ -4,10 +4,9 @@ import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import {
+  handleClosePopupWithOutsideClick,
   openPopup,
   closePopup,
-  handleClosePopupWithOutsideClick,
-  handleEscape,
 } from "../utils/utils.js";
 
 import Popup from "../components/Popup.js";
@@ -104,9 +103,9 @@ const addFormValidator = new FormValidator(settings, addFormElement);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 
-closePreviewButton.addEventListener("click", () =>
-  closePopup(previewImageModal)
-);
+// closePreviewButton.addEventListener("click", () =>
+//   closePopup(previewImageModal)
+// );
 
 // functions
 
