@@ -38,7 +38,7 @@ class Card {
     //   });
 
     this._cardElement.addEventListener("click", () => {
-      this._handleCardClick(this._link, this._name);
+      this._handleCardClick(this.name, this.link);
     });
   }
 
