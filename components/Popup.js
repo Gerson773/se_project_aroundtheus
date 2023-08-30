@@ -21,17 +21,20 @@ class Popup {
     }
   };
 
-  setEventListeners = () => {
+  setEventListeners() {
     this._popupElement.addEventListener("mousedown", (evt) => {
-      if (evt.target === evt.currentTarget) {
-        this.close(evt.target);
+      if (
+        evt.target.classList.contains("modal_opened") ||
+        evt.target.classList.contains("modal__close")
+      ) {
+        this.close();
       }
     });
 
     this._popupElementCloseBtn.addEventListener("click", () => {
       this.close();
     });
-  };
+  }
 }
 
 export default Popup;

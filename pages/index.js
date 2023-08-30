@@ -212,8 +212,8 @@ profileEditButton.addEventListener("click", openProfileForm);
 profileCloseButton.addEventListener("click", () => editProfilePopup.close());
 addNewCardButton.addEventListener("click", () => addCardPopup.open());
 cardCloseButton.addEventListener("click", () => addCardPopup.close());
-addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
-profileEditModal.addEventListener("submit", handleProfileEditSubmit);
+// addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
+// profileEditModal.addEventListener("submit", handleProfileEditSubmit);
 
 // profileEditButton.addEventListener("click", () => {
 //   profileTitleInput.value = profileTitle.textContent.trim();
