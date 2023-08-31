@@ -1,14 +1,14 @@
 // All imports
+import "./pages/index.css";
+import Section from "./components/Section.js";
+import Card from "./components/Card.js";
+import FormValidator from "./components/FormValidator.js";
+import UserInfo from "./components/UserInfo.js";
+import { handleClosePopupWithOutsideClick } from "./utils/utils.js";
 
-import Section from "../components/Section.js";
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js";
-import UserInfo from "../components/UserInfo.js";
-import { handleClosePopupWithOutsideClick } from "../utils/utils.js";
-
-import Popup from "../components/Popup.js";
-import PopupWithImage from "../components/PopupWithImage.js";
-import PopupWithForm from "../components/PopupWithForm.js";
+import Popup from "./components/Popup.js";
+import PopupWithImage from "./components/PopupWithImage.js";
+import PopupWithForm from "./components/PopupWithForm.js";
 
 export const initialCards = [
   {
@@ -156,10 +156,12 @@ function handleProfileEditSubmit(data) {
   editProfilePopup.close();
 }
 
-function handleAddCardFormSubmit(evt) {
+function handleAddCardFormSubmit() {
+  //evt.preventDefault();
   const name = cardTitleInput.value;
   const link = cardLinkInput.value;
   renderCard({ name, link }, cardListEL);
+  //addCardModal.reset();
   addFormValidator.toggleButtonState();
 }
 
