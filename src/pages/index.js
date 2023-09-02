@@ -1,14 +1,14 @@
 // All imports
-import "./pages/index.css";
-import Section from "./components/Section.js";
-import Card from "./components/Card.js";
-import FormValidator from "./components/FormValidator.js";
-import UserInfo from "./components/UserInfo.js";
-import { handleClosePopupWithOutsideClick } from "./utils/utils.js";
+import "../pages/index.css";
+import Section from "../components/Section.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import UserInfo from "../components/UserInfo.js";
+import { handleClosePopupWithOutsideClick } from "../utils/utils.js";
 
-import Popup from "./components/Popup.js";
-import PopupWithImage from "./components/PopupWithImage.js";
-import PopupWithForm from "./components/PopupWithForm.js";
+import Popup from "../components/Popup.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 export const initialCards = [
   {
@@ -115,15 +115,20 @@ editProfilePopup.setEventListeners();
 
 // Create and render card
 
-function createCard(cardData) {
-  const card = new Card(cardData, cardSelector, handleCardClick);
-  return card.getView();
-}
+const renderCard = (cardData) => {
+  const newCard = new Card(cardData, "#card-template", handleCardClick);
+  cardSection.addItem(newCard.getView());
+};
 
-function renderCard(cardData) {
-  const cardEl = createCard(cardData);
-  cardListEL.prepend(cardEl);
-}
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: renderCard,
+  },
+  cardListSelector
+);
+
+cardSection.renderItems();
 
 //Preview Popup Const
 
@@ -134,21 +139,6 @@ function handleCardClick(name, link) {
   imagePreviewPopup.open(name, link);
 }
 
-// New Sections To Render Card
-
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const newCard = new Card(cardData, "#card-template", handleCardClick);
-      cardSection.addItem(newCard.getView());
-    },
-  },
-  cardListSelector
-);
-
-cardSection.renderItems();
-
 /*Event Handlers*/
 
 function handleProfileEditSubmit(data) {
@@ -157,17 +147,15 @@ function handleProfileEditSubmit(data) {
 }
 
 function handleAddCardFormSubmit() {
-  //evt.preventDefault();
   const name = cardTitleInput.value;
   const link = cardLinkInput.value;
   renderCard({ name, link }, cardListEL);
-  //addCardModal.reset();
-  addFormValidator.toggleButtonState();
 }
 
 function fillProfileForm() {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
+  const userInfoData = userInfo.getUserInfo();
+  profileTitleInput.value = userInfoData.name;
+  profileDescriptionInput.value = userInfoData.description;
 }
 
 function openProfileForm() {
@@ -179,9 +167,8 @@ function openProfileForm() {
 
 profileEditButton.addEventListener("click", openProfileForm);
 profileCloseButton.addEventListener("click", () => editProfilePopup.close());
-addNewCardButton.addEventListener("click", () => addCardPopup.open());
-cardCloseButton.addEventListener("click", () => addCardPopup.close());
-
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", handleClosePopupWithOutsideClick);
+addNewCardButton.addEventListener("click", () => {
+  addFormValidator.toggleButtonState();
+  addCardPopup.open();
 });
+cardCloseButton.addEventListener("click", () => addCardPopup.close());

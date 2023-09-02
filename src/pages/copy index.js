@@ -156,3 +156,28 @@ initialCards.forEach((cardData) => renderCard(cardData, cardListEL));
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", handleClosePopupWithOutsideClick);
 });
+
+// function renderCard(cardData) {
+//   const cardEl = createCard(cardData);
+//   cardListEL.prepend(cardEl);
+// }
+
+// function createCard(cardData) {
+//   const card = new Card(cardData, cardSelector, handleCardClick);
+//   return card.getView();
+// }
+
+// New Sections To Render Card
+
+// const cardSection = new Section(
+//   {
+//     items: initialCards,
+//     renderer: (cardData) => {
+//       const newCard = new Card(cardData, "#card-template", handleCardClick);
+//       cardSection.addItem(newCard.getView());
+//     },
+//   },
+//   cardListSelector
+// );
+
+// cardSection.renderItems();
