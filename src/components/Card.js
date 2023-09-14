@@ -50,6 +50,12 @@ class Card {
     this._cardElement = null;
   }
 
+  _handleDeleteCardClick(cardId) {
+    if (confirm("Are you sure you want to delete this card?")) {
+      // If the user confirms the deletion, proceed with deletion logic
+      this._deleteCard(cardId);
+    }
+  }
   getView() {
     this._cardElement = document
       .querySelector(this._cardSelector)

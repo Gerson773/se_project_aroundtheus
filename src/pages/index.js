@@ -76,14 +76,42 @@ const addNewCardButton = document.querySelector(".profile__add-button");
 
 /* Form Data const*/
 
+//Delete Card const
+
+const deleteCardModalSelector = document.querySelector("#card__delete-modal");
+const deleteCardPopup = new PopupWithConfirmation(
+  "#card__delete-modal",
+  deleteCardModalSelector,
+  handleDeleteCardClick
+);
+
+function handleDeleteCardClick() {
+  deleteCardPopup.setSubmitAction(() => {
+    deleteCardPopup.setLoading(true);
+    api
+      .removeCard(data._id)
+      .then((res) => {
+        newCard.remove(res._id);
+        deleteCardPopup.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        deleteCardPopup.setLoading(false, "Yes");
+      });
+  });
+  deleteCardPopup.open(data._id);
+}
+
+// User Info
+
 api.getUserInfo().then((UserData) => {
   userInfo.setUserInfo({
     userName: UserData.name,
     userDescription: UserData.description,
   });
 });
-const deleteCardModalSelector = document.querySelector("#card__delete-modal");
-const deleteCardPopup = new PopupWithConfirmation(deleteCardModalSelector);
 
 const userInfo = new UserInfo(profileTitle, profileDescription);
 
@@ -137,12 +165,7 @@ editProfilePopup.setEventListeners();
 let cardSection;
 
 const renderCard = (cardData) => {
-  const newCard = new Card(
-    cardData,
-    "#card-template",
-    handleCardClick,
-    handleDeleteCardClick
-  );
+  const newCard = new Card(cardData, "#card-template", handleCardClick);
   cardSection.addItem(newCard.getView());
 };
 
@@ -218,32 +241,6 @@ function fillProfileForm() {
 function openProfileForm() {
   fillProfileForm();
   editProfilePopup.open();
-}
-
-// function handleDeleteCardClick(cardId) {
-//   if (confirm("Are you sure you want to delete this card?")) {
-//     api
-//       .removeCard(cardId)
-//       .then(() => {
-//         Card.remove();
-//       })
-//       .catch((error) => {
-//         console.error("Error deleting card:", error);
-//       });
-//   }
-// }
-
-function handleDeleteCardClick(cardId) {
-  deleteCardPopup.setSubmitAction(() => {
-    api
-      .removeCard(cardId)
-      .then(() => {})
-      .catch((err) => {
-        console.error(err);
-      });
-  });
-
-  deleteCardPopup.open();
 }
 
 /*Event Listeners*/
