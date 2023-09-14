@@ -1,9 +1,22 @@
 class Card {
-  constructor({ name, link }, cardSelector, handleCardClick) {
+  constructor(
+    { name, link, _id, userId },
+    cardSelector,
+    handleCardClick,
+    handleDeleteCardClick
+  ) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteCardClick = handleDeleteCardClick;
+    this._id = _id;
+    // this._myId = myId;
+    // this._userId = userId;
+  }
+
+  getId() {
+    return this._id;
   }
 
   _setEventListeners() {
@@ -16,7 +29,7 @@ class Card {
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteCard();
+        this._handleDeleteCardClick();
       });
 
     this._cardElement
