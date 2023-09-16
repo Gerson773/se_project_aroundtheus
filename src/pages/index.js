@@ -73,35 +73,36 @@ const addNewCardButton = document.querySelector(".profile__add-button");
 // const closePreviewButton = document.querySelector(
 //   "#preview-close-image-button"
 // );
+const deletePopupCloseButton = document.querySelector("#delete-modal-button");
+const deleteButton = document.querySelector(".modal__delete-button");
 
 /* Form Data const*/
 
 //Delete Card const
 
-const deleteCardModalSelector = document.querySelector("#card__delete-modal");
 const deleteCardPopup = new PopupWithConfirmation(
   "#card__delete-modal",
-  deleteCardModalSelector,
   handleDeleteCardClick
 );
 
-function handleDeleteCardClick() {
+function handleDeleteCardClick(cardId) {
   deleteCardPopup.setSubmitAction(() => {
     deleteCardPopup.setLoading(true);
     api
-      .removeCard(data._id)
-      .then((res) => {
-        newCard.remove(res._id);
+      .removeCard(cardId)
+      .then(() => {
+        newCard.remove();
+
         deleteCardPopup.close();
       })
       .catch((err) => {
         console.error(err);
       })
       .finally(() => {
-        deleteCardPopup.setLoading(false, "Yes");
+        deleteCardPopup.setLoading(false);
       });
   });
-  deleteCardPopup.open(data._id);
+  deleteCardPopup.open();
 }
 
 // User Info
@@ -165,7 +166,12 @@ editProfilePopup.setEventListeners();
 let cardSection;
 
 const renderCard = (cardData) => {
-  const newCard = new Card(cardData, "#card-template", handleCardClick);
+  const newCard = new Card(
+    cardData,
+    "#card-template",
+    handleCardClick,
+    handleDeleteCardClick
+  );
   cardSection.addItem(newCard.getView());
 };
 
@@ -179,18 +185,6 @@ api.getInitialCards().then((cardData) => {
   );
   cardSection.renderItems();
 });
-
-// api.getInitialCards().then((res) => console.log(res));
-
-// const cardSection = new Section(
-//   {
-//     items: initialCards,
-//     renderer: renderCard,
-//   },
-//   cardListSelector
-// );
-
-// cardSection.renderItems();
 
 //Preview Popup Const
 
@@ -252,3 +246,7 @@ addNewCardButton.addEventListener("click", () => {
   addCardPopup.open();
 });
 cardCloseButton.addEventListener("click", () => addCardPopup.close());
+deletePopupCloseButton.addEventListener("click", () => {
+  deleteCardPopup.close();
+});
+deleteButton.addEventListener("click", () => handleDeleteCardClick());

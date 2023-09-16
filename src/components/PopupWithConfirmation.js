@@ -5,20 +5,22 @@ class PopupWithConfirmation extends Popup {
     super({ popupSelector });
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._handleFormSubmit = handleFormSubmit;
+    this._deleteButton = this._popupElement.querySelector(
+      ".modal__delete-button"
+    );
   }
 
   setSubmitAction(action) {
     this._handleFormSubmit = action;
   }
 
-  setLoading(isLoading, submitSave) {
-    const buttonText = isLoading ? "Deleting..." : submitSave;
-    this._popupForm.querySelector(".modal__button").textContent = buttonText;
+  setLoading(isLoading) {
+    this._deleteButton.textContent = isLoading ? "Loading..." : "Yes";
   }
 
   close() {
     super.close();
-    this._popupForm.removeEventListener("submit", this._handleFormSubmit);
+    // this._popupForm.removeEventListener("submit", this._handleFormSubmit);
   }
 
   setEventListeners() {
