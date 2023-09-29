@@ -23,11 +23,18 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            class="profile__image"
-            src="<%=require('./images/jacques-cousteau.png')%>"
-            alt="Profile Avatar"
-          />
+          <div class="profile__container">
+            <img
+              class="profile__image"
+              src="<%=require('./images/jacques-cousteau.png')%>"
+              alt="Profile Avatar"
+            />
+            <button
+              type="button"
+              class="profile__avatar-button"
+              id="avatar-edit-button"
+            ></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
             <button
@@ -159,6 +166,25 @@
         <h2 class="modal__header-delete-card">Delete Card</h2>
         <p class="modal__text-delete-card">Are you sure?</p>
         <button class="modal__button modal__delete-button">Yes</button>
+      </div>
+    </div>
+
+    <div class="modal" id="avatar-edit-modal">
+      <div class="modal__container modal__container_edit-avatar">
+        <button class="modal__close" id="avatar-close-button"></button>
+        <p class="modal__header">Change Profile Picture</p>
+        <label class="modal__label">
+          <input
+            type="url"
+            name="link"
+            placeholder="Image Link"
+            class="modal__input modal__input_type_link"
+            id="edit-avatar-input"
+            required
+          />
+          <span class="modal__error" id="edit-avatar-input-error"></span>
+        </label>
+        <button class="button modal__button" type="submit">Save</button>
       </div>
     </div>
 
