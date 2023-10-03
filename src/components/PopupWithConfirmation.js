@@ -20,7 +20,7 @@ class PopupWithConfirmation extends Popup {
 
   _handleFormSubmit(event) {
     event.preventDefault();
-    this._handleFormSubmit;
+    this._setSubmitAction;
   }
 
   close() {
