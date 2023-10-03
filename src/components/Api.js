@@ -1,7 +1,8 @@
 class Api {
-  constructor({ baseUrl, authToken }) {
+  constructor({ baseUrl, authToken, headers }) {
     this._baseUrl = baseUrl;
     this._authToken = authToken;
+    this._headers = headers;
   }
 
   _processResponse(res) {
@@ -76,6 +77,7 @@ class Api {
   }
 
   removeCard(cardId) {
+    console.log(cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: {
@@ -87,7 +89,7 @@ class Api {
         res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
       )
       .catch((err) => {
-        console.error("Error:", err);
+        console.log(err);
       });
   }
 

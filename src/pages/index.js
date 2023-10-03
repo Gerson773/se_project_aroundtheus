@@ -39,7 +39,7 @@ const profileCloseButton = document.querySelector("#profile-close-button");
 const cardCloseButton = document.querySelector("#card-close-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
 const deletePopupCloseButton = document.querySelector("#delete-modal-button");
-const deleteButton = document.querySelector(".modal__delete-button");
+// const deleteButton = document.querySelector(".modal__delete-button");
 const profileAvatarButton = document.querySelector(".profile__avatar-button");
 const avatarPopupCloseButton = document.querySelector("#avatar-close-button");
 const profileDescriptionInput = document.querySelector(
@@ -148,10 +148,7 @@ function openProfileForm() {
 
 //Delete Card const
 
-const deleteCardPopup = new PopupWithConfirmation(
-  "#card__delete-modal",
-  handleDeleteCardClick
-);
+const deleteCardPopup = new PopupWithConfirmation("#card__delete-modal");
 
 deleteCardPopup.setEventListeners();
 
@@ -163,7 +160,7 @@ function handleDeleteCardClick(cardId) {
     api
       .removeCard(cardId)
       .then(() => {
-        newCard.removeCard(res);
+        newCard.removeCard();
         deleteCardPopup.close();
       })
       .catch((err) => {
@@ -265,7 +262,7 @@ deletePopupCloseButton.addEventListener("click", () => {
   deleteCardPopup.close();
 });
 
-deleteButton.addEventListener("click", () => handleDeleteCardClick(cardId));
+// deleteButton.addEventListener("click", () => handleDeleteCardClick(cardId));
 avatarPopupCloseButton.addEventListener("click", () => {
   editAvatarPopup.close();
 });
