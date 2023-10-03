@@ -54,33 +54,6 @@ const cardLinkInput = addCardFormElement.querySelector(
 );
 const cardSelector = "#card-template";
 
-//Delete Card const
-
-const deleteCardPopup = new PopupWithConfirmation(
-  "#card__delete-modal",
-  handleDeleteCardClick
-);
-
-function handleDeleteCardClick(cardId) {
-  deleteCardPopup.setSubmitAction(() => {
-    deleteCardPopup.setLoading(true);
-    api
-      .removeCard(cardId)
-      .then(() => {
-        newCard.remove();
-
-        deleteCardPopup.close();
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        deleteCardPopup.setLoading(false);
-      });
-  });
-  deleteCardPopup.open();
-}
-
 // Likes Api
 
 function handleLikeClick() {
@@ -173,6 +146,36 @@ function openProfileForm() {
   editProfilePopup.open();
 }
 
+//Delete Card const
+
+const deleteCardPopup = new PopupWithConfirmation(
+  "#card__delete-modal",
+  handleDeleteCardClick
+);
+
+deleteCardPopup.setEventListeners();
+
+let cardId;
+
+function handleDeleteCardClick(cardId) {
+  deleteCardPopup.setSubmitAction(() => {
+    deleteCardPopup.setLoading(true);
+    api
+      .removeCard(cardId)
+      .then(() => {
+        newCard.removeCard(res);
+        deleteCardPopup.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        deleteCardPopup.setLoading(false);
+      });
+  });
+  deleteCardPopup.open();
+}
+
 /*Form Validation*/
 
 const settings = {
@@ -210,7 +213,7 @@ const renderCard = (cardData) => {
 api.getInitialCards().then((cardData) => {
   cardSection = new Section(
     {
-      items: cardData,
+      items: cardData.reverse(),
       renderer: renderCard,
     },
     cardListSelector
@@ -262,7 +265,6 @@ deletePopupCloseButton.addEventListener("click", () => {
   deleteCardPopup.close();
 });
 
-const cardId = "";
 deleteButton.addEventListener("click", () => handleDeleteCardClick(cardId));
 avatarPopupCloseButton.addEventListener("click", () => {
   editAvatarPopup.close();

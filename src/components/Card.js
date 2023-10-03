@@ -12,11 +12,11 @@ class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick;
+    this._handleLikeClick = handleLikeClick;
     this._cardId = _id;
     this._userId = userId;
     this._ownerId = ownerId;
     this._myId = myId;
-    this._handleLikeClick = handleLikeClick;
   }
 
   getId() {
@@ -53,16 +53,16 @@ class Card {
   }
 
   _setEventListeners() {
-    // this._cardElement
-    //   .querySelector(".card__like-button")
-    //   .addEventListener("click", () => {
-    //     this._handleLikeClick();
-    //   });
+    this._cardElement
+      .querySelector(".card__like-button")
+      .addEventListener("click", () => {
+        this._handleLikeClick();
+      });
 
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteCardClick();
+        this._handleDeleteCardClick(this._id);
       });
 
     this._cardElement
@@ -78,14 +78,18 @@ class Card {
   //     .classList.toggle("card__like-button_active");
   // }
 
-  _handleDeleteCard() {
-    this._cardElement.remove();
-    this._cardElement = null;
+  _handleDeleteCardClick() {
+    this._removeCard();
   }
 
-  _handleDeleteCardClick(cardId) {
-    this._deleteCard();
+  removeCard() {
+    this._cardElement.remove();
   }
+
+  // _handleDeleteCard(cardId) {
+  //   this._cardElement.remove();
+  //   this._cardElement = null;
+  // }
 
   _hideDeleteButton() {
     if (this._ownerId !== this._userId) {

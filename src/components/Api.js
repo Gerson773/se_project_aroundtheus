@@ -66,7 +66,13 @@ class Api {
         name,
         link,
       }),
-    });
+    })
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+      )
+      .catch((err) => {
+        console.error("Error:", err);
+      });
   }
 
   removeCard(cardId) {
@@ -84,6 +90,7 @@ class Api {
         console.error("Error:", err);
       });
   }
+
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",

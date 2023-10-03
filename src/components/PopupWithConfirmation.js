@@ -18,19 +18,19 @@ class PopupWithConfirmation extends Popup {
     this._deleteButton.textContent = isLoading ? "Loading..." : "Yes";
   }
 
-  // _handleSubmit() {
-  //   e.preventDefault();
-  //   this._handleDeleteSubmit();
-  // }
+  _handleFormSubmit(event) {
+    event.preventDefault();
+    this._handleFormSubmit;
+  }
 
   close() {
     super.close();
-    // this._popupForm.removeEventListener("submit", this._handleSubmit);
+    this._deleteButton.removeEventListener("submit", this._handleFormSubmit);
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._popupForm.addEventListener("submit", this._handleFormSubmit);
+    this._deleteButton.addEventListener("submit", this._handleFormSubmit);
   }
 }
 
