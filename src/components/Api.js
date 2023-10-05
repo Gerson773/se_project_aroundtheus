@@ -130,9 +130,16 @@ class Api {
       method: "PATCH",
       headers: {
         authorization: this._authToken,
+        "Content-Type": "application/json", // Include the Content-Type header
       },
       body: JSON.stringify({ avatar }),
-    }).then(this._processResponse);
+    })
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+      )
+      .catch((err) => {
+        console.error("Error:", err);
+      });
   }
 }
 

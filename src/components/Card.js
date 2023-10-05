@@ -4,7 +4,7 @@ class Card {
     cardSelector,
     handleCardClick,
     handleDeleteCardClick,
-    handleLikeClick
+    handleCardLikeClick
   ) {
     this._name = name;
     this._link = link;
@@ -12,7 +12,8 @@ class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardClick = handleDeleteCardClick;
-    this._handleLikeClick = handleLikeClick;
+    this._handleCardLikeClick = handleCardLikeClick;
+    this._likesNum = 0;
     this._cardId = _id;
     this._userId = userId;
     this._ownerId = ownerId;
@@ -30,39 +31,37 @@ class Card {
     };
   }
 
-  _renderLikes() {
-    if (this._likes) {
-      this._cardElement
-        .querySelector(".card__like-button")
-        .classList.add(".card__like-button_active");
-    } else {
-      this._cardElement
-        .querySelector(".card__like-button")
-        .classList.remove(".card__like-button_active ");
-    }
-  }
-
-  setLikes(isLiked) {
+  setLikesStatus(isLiked) {
     this._likes = isLiked;
     this._renderLikes();
   }
 
-  _displayLikeCount() {
-    const likesNum = this._likes;
-    return (this._likeCounter.textContent = likesNum.lenght);
+  _renderLikes() {
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+    if (this._likes) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
+    }
   }
+
+  // _displayLikeCount() {
+  //   debugger;
+  //   this._likesNum = this._likes;
+  //   this._likeCounter.textContent = this._likesNum.toString();
+  // }
 
   _setEventListeners() {
     this._cardElement
       .querySelector(".card__like-button")
       .addEventListener("click", () => {
-        this._handleLikeClick();
+        this._handleCardLikeClick(this._cardId, this._likes);
       });
 
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteCardClick(this._id);
+        this._handleDeleteCardClick(this._cardId);
       });
 
     this._cardElement
@@ -72,10 +71,10 @@ class Card {
       });
   }
 
-  // _handleLikeClick() {
+  // _handleCardLikeClick() {
   //   this._cardElement
   //     .querySelector(".card__like-button")
-  //     .classList.toggle("card__like-button_active");
+  //     .classList.toggle(".card__like-button_active");
   // }
 
   _handleDeleteCardClick() {
@@ -109,6 +108,7 @@ class Card {
     this._cardElement.querySelector(".card__image").alt = this._name;
 
     this._setEventListeners();
+    this._renderLikes();
 
     return this._cardElement;
   }
