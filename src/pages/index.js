@@ -41,6 +41,8 @@ const addNewCardButton = document.querySelector(".profile__add-button");
 const deletePopupCloseButton = document.querySelector("#delete-modal-button");
 const profileAvatarButton = document.querySelector(".profile__avatar-button");
 const avatarPopupCloseButton = document.querySelector("#avatar-close-button");
+const avatarElement = document.querySelector(".profile__image");
+const editAvatarModal = document.querySelector("#avatar-edit-modal");
 const saveAvatarButton = document.querySelector("#save-avatar-button");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
@@ -80,31 +82,36 @@ function handleCardLikeClick(cardId, isLiked) {
   }
 }
 
-// function handleCardLikeClick(cardId, isLiked) {
-//   if (isLiked) {
-//     api
-//       .unlikeCard(cardId)
-//       .then(() => {})
-//       .catch((err) => {
-//         console.error(err);
-//       });
-//   } else {
-//     api
-//       .likeCard(cardId)
-//       .then(() => {})
-//       .catch((err) => {
-//         console.error(err);
-//       });
-//   }
-// }
+// Edit Avatar
+
+const editAvatarPopup = new PopupWithForm(
+  "#avatar-edit-modal",
+  handleEditAvatar
+);
+
+function handleEditAvatar(avatar) {
+  editAvatarPopup.setLoading(true);
+  api
+    .updateProfileAvatar(avatar)
+    .then((userData) => {
+      userInfo.setUserAvatar(userData.avatar);
+      editAvatarPopup.close();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      editAvatarPopup.setLoading(false, "Save");
+    });
+}
+
+editAvatarPopup.setEventListeners();
+
+profileAvatarButton.addEventListener("click", () => editAvatarPopup.open());
 
 // User Info + Update Profile
 
-const userInfo = new UserInfo(
-  profileTitle,
-  profileDescription,
-  "profile__image"
-);
+const userInfo = new UserInfo(profileTitle, profileDescription, avatarElement);
 
 function fillProfileForm() {
   const userInfoData = userInfo.getUserInfo();
@@ -212,12 +219,18 @@ const settings = {
 
 const editFormElement = profileEditModal.querySelector(".modal__form");
 const addFormElement = addCardModal.querySelector(".modal__form");
+const avatarEditFormElement = editAvatarModal.querySelector(".modal__form");
 
 const editFormValidator = new FormValidator(settings, editFormElement);
 const addFormValidator = new FormValidator(settings, addFormElement);
+const avatarEditFormValidator = new FormValidator(
+  settings,
+  avatarEditFormElement
+);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+avatarEditFormValidator.enableValidation();
 
 // Create and render card
 
@@ -254,35 +267,6 @@ function handleCardClick(name, link) {
   imagePreviewPopup.open(name, link);
 }
 
-// Edit avatar
-
-const editAvatarPopup = new PopupWithForm(
-  "#avatar-edit-modal",
-  handleEditAvatar
-);
-
-function handleEditAvatar(avatar) {
-  const initialButtonText = editAvatarPopup.getSubmitText();
-  editAvatarPopup.setSubmitText("Saving...");
-  api
-    .updateProfileAvatar(avatar)
-    .then((userData) => {
-      userInfo.setUserAvatar(userData.avatar);
-
-      editAvatarPopup.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      editAvatarPopup.setSubmitText(initialButtonText);
-    });
-}
-
-editAvatarPopup.setEventListeners();
-
-profileAvatarButton.addEventListener("click", () => editAvatarPopup.open());
-
 /*Event Listeners*/
 
 profileEditButton.addEventListener("click", openProfileForm);
@@ -298,7 +282,7 @@ deletePopupCloseButton.addEventListener("click", () => {
 avatarPopupCloseButton.addEventListener("click", () => {
   editAvatarPopup.close();
 });
-saveAvatarButton.addEventListener("click", () => {
-  const avatar = document.querySelector("#edit-avatar-input").value;
-  handleEditAvatar(avatar);
-});
+// saveAvatarButton.addEventListener("click", () => {
+//   const avatar = document.querySelector("#edit-avatar-input").value;
+//   handleEditAvatar(avatar);
+// });

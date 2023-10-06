@@ -1,8 +1,8 @@
 class UserInfo {
-  constructor(name, description) {
+  constructor(name, description, avatarElement) {
     this.name = name;
     this.description = description;
-    this._avatarElement = document.querySelector(".profile__image");
+    this._avatarElement = avatarElement;
   }
 
   getUserInfo() {
