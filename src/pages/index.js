@@ -89,10 +89,10 @@ const editAvatarPopup = new PopupWithForm(
   handleEditAvatar
 );
 
-function handleEditAvatar(avatar) {
+function handleEditAvatar(data) {
   editAvatarPopup.setLoading(true);
   api
-    .updateProfileAvatar(avatar)
+    .updateProfileAvatar(data.link)
     .then((userData) => {
       userInfo.setUserAvatar(userData.avatar);
       editAvatarPopup.close();
@@ -101,7 +101,7 @@ function handleEditAvatar(avatar) {
       console.error(err);
     })
     .finally(() => {
-      editAvatarPopup.setLoading(false, "Save");
+      editAvatarPopup.setLoading(false, "Saving");
     });
 }
 
@@ -127,6 +127,7 @@ api.getUserInfo().then((userData) => {
 });
 
 function handleProfileEditSubmit(data) {
+  editProfilePopup.setLoading(true);
   api
     .updateProfile(data)
     .then(() => {
@@ -136,7 +137,9 @@ function handleProfileEditSubmit(data) {
     .catch((error) => {
       console.error(error);
     })
-    .finally(() => {});
+    .finally(() => {
+      editProfilePopup.setLoading(false);
+    });
 }
 
 const editProfilePopup = new PopupWithForm(

@@ -5,10 +5,11 @@ class PopupWithForm extends Popup {
     super({ popupSelector });
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._handleFormSubmit = handleFormSubmit;
+    this._submitButton = this._popupForm.querySelector(".modal__button");
   }
 
   setLoading(isLoading) {
-    this._popupForm.textContent = isLoading ? "Saving..." : "Save";
+    this._submitButton.textContent = isLoading ? "Saving..." : "Save";
   }
 
   _getInputValues() {
