@@ -132,7 +132,6 @@ function handleProfileEditSubmit(data) {
     .updateProfile(data)
     .then(() => {
       editProfilePopup.close();
-      location.reload();
     })
     .catch((error) => {
       console.error(error);
@@ -198,7 +197,6 @@ function handleDeleteCardClick(cardId) {
           newCard.removeCard();
         }
         deleteCardPopup.close();
-        location.reload();
       })
       .catch((err) => {
         console.error(err);
