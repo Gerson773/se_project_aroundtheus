@@ -193,9 +193,6 @@ function handleDeleteCardClick(cardId) {
     api
       .removeCard(cardId)
       .then(() => {
-        if (newCard) {
-          newCard.removeCard();
-        }
         deleteCardPopup.close();
       })
       .catch((err) => {
@@ -207,6 +204,27 @@ function handleDeleteCardClick(cardId) {
   });
   deleteCardPopup.open();
 }
+
+// function handleDeleteCardClick(cardId) {
+//   deleteCardPopup.setSubmitAction(() => {
+//     deleteCardPopup.setLoading(true);
+//     api
+//       .removeCard(cardId)
+//       .then(() => {
+//         if (newCard) {
+//           newCard.removeCard();
+//         }
+//         deleteCardPopup.close();
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       })
+//       .finally(() => {
+//         deleteCardPopup.setLoading(false);
+//       });
+//   });
+//   deleteCardPopup.open();
+// }
 
 /*Form Validation*/
 
