@@ -131,6 +131,7 @@ function handleProfileEditSubmit(data) {
   api
     .updateProfile(data)
     .then(() => {
+      userInfo.setUserInfo(userData.name, userData.about);
       editProfilePopup.close();
     })
     .catch((error) => {
@@ -181,50 +182,28 @@ function openProfileForm() {
 
 //Delete Card const
 
-const deleteCardPopup = new PopupWithConfirmation("#card__delete-modal");
+const deleteCardPopup = new PopupWithConfirmation(
+  "#card__delete-modal",
+  "Deleting..."
+);
 
 deleteCardPopup.setEventListeners();
 
-let newCard;
-
-function handleDeleteCardClick(cardId) {
+function handleDeleteCardClick(cardId, card) {
   deleteCardPopup.setSubmitAction(() => {
-    deleteCardPopup.setLoading(true);
     api
-      .removeCard(cardId)
+      .removeCardOnServer(cardId)
       .then(() => {
+        card.removeCard();
         deleteCardPopup.close();
       })
       .catch((err) => {
         console.error(err);
       })
-      .finally(() => {
-        deleteCardPopup.setLoading(false);
-      });
+      .finally(() => {});
   });
   deleteCardPopup.open();
 }
-
-// function handleDeleteCardClick(cardId) {
-//   deleteCardPopup.setSubmitAction(() => {
-//     deleteCardPopup.setLoading(true);
-//     api
-//       .removeCard(cardId)
-//       .then(() => {
-//         if (newCard) {
-//           newCard.removeCard();
-//         }
-//         deleteCardPopup.close();
-//       })
-//       .catch((err) => {
-//         console.error(err);
-//       })
-//       .finally(() => {
-//         deleteCardPopup.setLoading(false);
-//       });
-//   });
-//   deleteCardPopup.open();
-// }
 
 /*Form Validation*/
 
@@ -260,7 +239,7 @@ const renderCard = (cardData) => {
     cardData,
     "#card-template",
     handleCardClick,
-    handleDeleteCardClick,
+    (cardId) => handleDeleteCardClick(cardId, newCard),
     handleCardLikeClick
   );
   cardSection.addItem(newCard.getView());

@@ -76,7 +76,7 @@ class Api {
       });
   }
 
-  removeCard(cardId) {
+  removeCardOnServer(cardId) {
     console.log(cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
