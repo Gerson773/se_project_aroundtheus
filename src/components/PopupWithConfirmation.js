@@ -13,15 +13,6 @@ class PopupWithConfirmation extends Popup {
     this._handleFormSubmit = action;
   }
 
-  // setLoading(isLoading) {
-  //   if (isLoading) {
-  //     this._popupForm.textContent = "Saving...";
-  //   } else {
-  //     this._popupForm.textContent = "Yes"; // or whatever text you want
-  //     this._popupForm.reset(); // Reset the form
-  //   }
-  // }
-
   _handleSubmit = (event) => {
     event.preventDefault();
     this._handleFormSubmit();

@@ -130,8 +130,12 @@ function handleProfileEditSubmit(data) {
   editProfilePopup.setLoading(true);
   api
     .updateProfile(data)
-    .then(() => {
-      userInfo.setUserInfo(userData.name, userData.about);
+    .then((userData) => {
+      userInfo.setUserInfo({
+        name: userData.name,
+        description: userData.about,
+      });
+      fillProfileForm();
       editProfilePopup.close();
     })
     .catch((error) => {

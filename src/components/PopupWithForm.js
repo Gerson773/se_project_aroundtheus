@@ -9,7 +9,7 @@ class PopupWithForm extends Popup {
   }
 
   setLoading(isLoading) {
-    this._submitButton.textContent = "Saving...";
+    this._submitButton.textContent = isLoading ? "Saving..." : "Save";
   }
 
   _getInputValues() {
