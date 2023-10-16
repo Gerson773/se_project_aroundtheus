@@ -86,7 +86,8 @@ function handleCardLikeClick(cardId, isLiked) {
 
 const editAvatarPopup = new PopupWithForm(
   "#avatar-edit-modal",
-  handleEditAvatar
+  handleEditAvatar,
+  "Save"
 );
 
 function handleEditAvatar(data) {
@@ -148,7 +149,8 @@ function handleProfileEditSubmit(data) {
 
 const editProfilePopup = new PopupWithForm(
   "#profile-edit-modal",
-  handleProfileEditSubmit
+  handleProfileEditSubmit,
+  "Save"
 );
 editProfilePopup.setEventListeners();
 
@@ -159,22 +161,26 @@ function handleAddCardFormSubmit() {
   const { value: link } = cardLinkInput;
   const cardData = { name, link };
 
+  addCardPopup.setLoading(true);
+
   api
     .addCard(cardData)
     .then((res) => {
       renderCard(res, cardListEL);
-
       addCardPopup.close();
     })
-
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      addCardPopup.setLoading(false, "Create");
     });
 }
 
 const addCardPopup = new PopupWithForm(
   "#add-card-modal",
-  handleAddCardFormSubmit
+  handleAddCardFormSubmit,
+  "Create"
 );
 addCardPopup.setEventListeners();
 
