@@ -219,32 +219,11 @@ editProfilePopup.setEventListeners();
 
 // Add Card APi
 
-// function handleAddCardFormSubmit(formValues) {
-//   addCardPopup.setLoading(true);
-//   debugger;
-//   api
-//     .addCard(formValues)
-//     .then((res) => {
-//       renderCard(res, cardListEL);
-//       addCardPopup.close();
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     })
-//     .finally(() => {
-//       addCardPopup.setLoading(false, "Create");
-//     });
-// }
-
-function handleAddCardFormSubmit() {
-  const { value: name } = cardTitleInput;
-  const { value: link } = cardLinkInput;
-  const cardData = { name, link };
-
+function handleAddCardFormSubmit(formValues) {
   addCardPopup.setLoading(true);
-
+  debugger;
   api
-    .addCard(cardData)
+    .addCard(formValues)
     .then((res) => {
       renderCard(res, cardListEL);
       addCardPopup.close();
@@ -256,6 +235,27 @@ function handleAddCardFormSubmit() {
       addCardPopup.setLoading(false, "Create");
     });
 }
+
+// function handleAddCardFormSubmit() {
+//   const { value: name } = cardTitleInput;
+//   const { value: link } = cardLinkInput;
+//   const cardData = { name, link };
+
+//   addCardPopup.setLoading(true);
+
+//   api
+//     .addCard(cardData)
+//     .then((res) => {
+//       renderCard(res, cardListEL);
+//       addCardPopup.close();
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     })
+//     .finally(() => {
+//       addCardPopup.setLoading(false, "Create");
+//     });
+// }
 
 const addCardPopup = new PopupWithForm(
   "#add-card-modal",
