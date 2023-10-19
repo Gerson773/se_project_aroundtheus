@@ -12,9 +12,17 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import Api from "../components/Api.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
+// const api = new Api({
+//   baseUrl: "https://around-api.en.tripleten-services.com/v1",
+//   authToken: "5c996316-6337-4579-a87d-d8a06991f1d4",
+// });
+
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  authToken: "5c996316-6337-4579-a87d-d8a06991f1d4",
+  headers: {
+    authorization: "5c996316-6337-4579-a87d-d8a06991f1d4",
+    "Content-Type": "application/json",
+  },
 });
 
 export const cardData = {
@@ -58,13 +66,12 @@ const cardSelector = "#card-template";
 
 // Likes Api
 
-function handleCardLikeClick(cardId, isLiked) {
+function handleCardLikeClick(cardId, isLiked, setLikesStatus) {
   if (isLiked) {
     api
       .unlikeCard(cardId)
       .then((cardData) => {
-        this._likes = cardData.isLiked;
-        this._renderLikes();
+        setLikesStatus(cardData.isLiked);
       })
       .catch((err) => {
         console.error(err);
@@ -73,14 +80,61 @@ function handleCardLikeClick(cardId, isLiked) {
     api
       .likeCard(cardId)
       .then((cardData) => {
-        this._likes = cardData.isLiked;
-        this._renderLikes();
+        setLikesStatus(cardData.isLiked);
       })
       .catch((err) => {
         console.error(err);
       });
   }
 }
+
+// handleCardLikeClick(cardId, isLiked, setLikesStatus);
+
+// function handleCardLikeClick(cardId, isLiked) {
+//   if (isLiked) {
+//     api
+//       .unlikeCard(cardId)
+//       .then((cardData) => {
+//         this.setLikesStatus(cardData.isLiked);
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   } else {
+//     api
+//       .likeCard(cardId)
+//       .then((cardData) => {
+//         this.setLikesStatus(cardData.isLiked);
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
+// }
+
+// function handleCardLikeClick(cardId, isLiked) {
+//   if (isLiked) {
+//     api
+//       .unlikeCard(cardId)
+//       .then((cardData) => {
+//         this._likes = cardData.isLiked;
+//         this._renderLikes();
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   } else {
+//     api
+//       .likeCard(cardId)
+//       .then((cardData) => {
+//         this._likes = cardData.isLiked;
+//         this._renderLikes();
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
+// }
 
 // Edit Avatar
 
@@ -108,7 +162,11 @@ function handleEditAvatar(data) {
 
 editAvatarPopup.setEventListeners();
 
-profileAvatarButton.addEventListener("click", () => editAvatarPopup.open());
+profileAvatarButton.addEventListener("click", () => {
+  avatarEditFormValidator.toggleButtonState();
+
+  editAvatarPopup.open();
+});
 
 // User Info + Update Profile
 
@@ -120,12 +178,17 @@ function fillProfileForm() {
   profileDescriptionInput.value = userInfoData.description;
 }
 
-api.getUserInfo().then((userData) => {
-  userInfo.setUserInfo({
-    name: userData.name,
-    description: userData.about,
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      description: userData.about,
+    });
+  })
+  .catch((error) => {
+    console.error("Error:", error);
   });
-});
 
 function handleProfileEditSubmit(data) {
   editProfilePopup.setLoading(true);
@@ -140,7 +203,7 @@ function handleProfileEditSubmit(data) {
       editProfilePopup.close();
     })
     .catch((error) => {
-      console.error(error);
+      console.error("Error updating profile:", error);
     })
     .finally(() => {
       editProfilePopup.setLoading(false);
@@ -156,6 +219,23 @@ editProfilePopup.setEventListeners();
 
 // Add Card APi
 
+// function handleAddCardFormSubmit(formValues) {
+//   addCardPopup.setLoading(true);
+//   debugger;
+//   api
+//     .addCard(formValues)
+//     .then((res) => {
+//       renderCard(res, cardListEL);
+//       addCardPopup.close();
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     })
+//     .finally(() => {
+//       addCardPopup.setLoading(false, "Create");
+//     });
+// }
+
 function handleAddCardFormSubmit() {
   const { value: name } = cardTitleInput;
   const { value: link } = cardLinkInput;
@@ -169,8 +249,8 @@ function handleAddCardFormSubmit() {
       renderCard(res, cardListEL);
       addCardPopup.close();
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error);
     })
     .finally(() => {
       addCardPopup.setLoading(false, "Create");
@@ -255,16 +335,21 @@ const renderCard = (cardData) => {
   cardSection.addItem(newCard.getView());
 };
 
-api.getInitialCards().then((cardData) => {
-  cardSection = new Section(
-    {
-      items: cardData.reverse(),
-      renderer: renderCard,
-    },
-    cardListSelector
-  );
-  cardSection.renderItems();
-});
+api
+  .getInitialCards()
+  .then((cardData) => {
+    cardSection = new Section(
+      {
+        items: cardData.reverse(),
+        renderer: renderCard,
+      },
+      cardListSelector
+    );
+    cardSection.renderItems();
+  })
+  .catch((error) => {
+    console.error("Error loading initial cards:", error);
+  });
 
 //Preview Popup Const
 
@@ -284,13 +369,3 @@ addNewCardButton.addEventListener("click", () => {
   addCardPopup.open();
 });
 cardCloseButton.addEventListener("click", () => addCardPopup.close());
-deletePopupCloseButton.addEventListener("click", () => {
-  deleteCardPopup.close();
-});
-avatarPopupCloseButton.addEventListener("click", () => {
-  editAvatarPopup.close();
-});
-// saveAvatarButton.addEventListener("click", () => {
-//   const avatar = document.querySelector("#edit-avatar-input").value;
-//   handleEditAvatar(avatar);
-// });

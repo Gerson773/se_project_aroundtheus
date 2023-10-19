@@ -55,7 +55,9 @@ class Card {
     this._cardElement
       .querySelector(".card__like-button")
       .addEventListener("click", () => {
-        this._handleCardLikeClick(this._cardId, this._likes);
+        this._handleCardLikeClick(this._cardId, this._likes, (isLiked) =>
+          this.setLikesStatus(isLiked)
+        );
       });
 
     this._cardElement
