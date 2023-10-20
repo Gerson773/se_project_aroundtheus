@@ -67,7 +67,6 @@ const renderCard = (cardData) => {
   const newCard = new Card(
     cardData,
     "#card-template",
-    handleAddCardFormSubmit,
     handleCardClick,
     (cardId) => handleDeleteCardClick(cardId, newCard),
     handleCardLikeClick
