@@ -198,11 +198,13 @@ editProfilePopup.setEventListeners();
 // Add Card APi
 
 function handleAddCardFormSubmit(formValues) {
+  debugger;
   addCardPopup.setLoading(true);
   api
     .addCard(formValues)
     .then((res) => {
       renderCard(res, cardListEL);
+      debugger;
       addCardPopup.close();
     })
     .catch((error) => {
