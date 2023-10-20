@@ -37,6 +37,7 @@ import {
   saveAvatarButton,
   cardSelector,
 } from "../utils/constants.js";
+import { data } from "autoprefixer";
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -52,6 +53,42 @@ export const cardData = {
 };
 
 export const cardListSelector = ".card";
+
+Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
+  ([userData, cardData]) => {
+    userInfo.setUserInfo({ name: userData.name, description: userData.about });
+    userInfo.setUserAvatar(userData.avatar);
+  }
+);
+
+let cardSection;
+
+const renderCard = (cardData) => {
+  const newCard = new Card(
+    cardData,
+    "#card-template",
+    handleCardClick,
+    (cardId) => handleDeleteCardClick(cardId, newCard),
+    handleCardLikeClick
+  );
+  cardSection.addItem(newCard.getView());
+};
+
+api
+  .getInitialCards()
+  .then((cardData) => {
+    cardSection = new Section(
+      {
+        items: cardData.reverse(),
+        renderer: renderCard,
+      },
+      cardListSelector
+    );
+    cardSection.renderItems();
+  })
+  .catch((error) => {
+    console.error("Error loading initial cards:", error);
+  });
 
 // Likes Api
 
@@ -219,35 +256,6 @@ addFormValidator.enableValidation();
 avatarEditFormValidator.enableValidation();
 
 // Create and render card
-
-let cardSection;
-
-const renderCard = (cardData) => {
-  const newCard = new Card(
-    cardData,
-    "#card-template",
-    handleCardClick,
-    (cardId) => handleDeleteCardClick(cardId, newCard),
-    handleCardLikeClick
-  );
-  cardSection.addItem(newCard.getView());
-};
-
-api
-  .getInitialCards()
-  .then((cardData) => {
-    cardSection = new Section(
-      {
-        items: cardData.reverse(),
-        renderer: renderCard,
-      },
-      cardListSelector
-    );
-    cardSection.renderItems();
-  })
-  .catch((error) => {
-    console.error("Error loading initial cards:", error);
-  });
 
 //Preview Popup Const
 
