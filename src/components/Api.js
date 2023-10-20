@@ -120,13 +120,13 @@ class Api {
   //     });
   // }
 
-  addCard({ name, link }) {
+  addCard({ title, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name,
-        link,
+        name: title,
+        link: link,
       }),
     }).then(this._checkResponse);
   }

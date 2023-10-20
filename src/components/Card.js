@@ -62,7 +62,8 @@ class Card {
 
     this._cardElement
       .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
+      .addEventListener("click", (event) => {
+        event.preventDefault();
         this._handleDeleteCardClick(this._cardId);
       });
 
@@ -73,12 +74,6 @@ class Card {
       });
   }
 
-  // _handleCardLikeClick() {
-  //   this._cardElement
-  //     .querySelector(".card__like-button")
-  //     .classList.toggle(".card__like-button_active");
-  // }
-
   _handleDeleteCardClick() {
     this._removeCard();
   }
@@ -86,17 +81,6 @@ class Card {
   removeCard() {
     this._cardElement.remove();
     this._cardElement = null;
-  }
-
-  // _handleDeleteCard(cardId) {
-  //   this._cardElement.remove();
-  //   this._cardElement = null;
-  // }
-
-  _hideDeleteButton() {
-    if (this._ownerId !== this._userId) {
-      this._cardElement.querySelector(".card__delete-button");
-    }
   }
 
   getView() {
