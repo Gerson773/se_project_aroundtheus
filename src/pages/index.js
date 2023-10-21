@@ -203,7 +203,7 @@ function handleAddCardFormSubmit(formValues) {
   api
     .addCard(formValues)
     .then((res) => {
-      renderCard(res, cardSection);
+      renderCard(res.data, cardSection);
       debugger;
       addCardPopup.close();
     })
