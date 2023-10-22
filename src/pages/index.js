@@ -54,12 +54,23 @@ export const cardData = {
 
 export const cardListSelector = ".card";
 
-Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
-  ([userData, cardData]) => {
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cardData]) => {
     userInfo.setUserInfo({ name: userData.name, description: userData.about });
     userInfo.setUserAvatar(userData.avatar);
-  }
-);
+
+    cardSection = new Section(
+      {
+        items: cardData.reverse(),
+        renderer: renderCard,
+      },
+      cardListSelector
+    );
+    cardSection.renderItems();
+  })
+  .catch((error) => {
+    console.error("Error", error);
+  });
 
 let cardSection;
 
@@ -73,22 +84,6 @@ const renderCard = (cardData) => {
   );
   cardSection.addItem(newCard.getView());
 };
-
-api
-  .getInitialCards()
-  .then((cardData) => {
-    cardSection = new Section(
-      {
-        items: cardData.reverse(),
-        renderer: renderCard,
-      },
-      cardListSelector
-    );
-    cardSection.renderItems();
-  })
-  .catch((error) => {
-    console.error("Error loading initial cards:", error);
-  });
 
 // Likes Api
 
@@ -156,18 +151,6 @@ function fillProfileForm() {
   profileDescriptionInput.value = userInfoData.description;
 }
 
-api
-  .getUserInfo()
-  .then((userData) => {
-    userInfo.setUserInfo({
-      name: userData.name,
-      description: userData.about,
-    });
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
-
 function handleProfileEditSubmit(data) {
   editProfilePopup.setLoading(true);
   api
@@ -177,11 +160,10 @@ function handleProfileEditSubmit(data) {
         name: userData.name,
         description: userData.about,
       });
-      fillProfileForm();
       editProfilePopup.close();
     })
     .catch((error) => {
-      console.error("Error updating profile:", error);
+      console.error("Error", error);
     })
     .finally(() => {
       editProfilePopup.setLoading(false);
@@ -198,13 +180,11 @@ editProfilePopup.setEventListeners();
 // Add Card APi
 
 function handleAddCardFormSubmit(formValues) {
-  debugger;
   addCardPopup.setLoading(true);
   api
     .addCard(formValues)
     .then((res) => {
       renderCard(res.data, cardSection);
-      debugger;
       addCardPopup.close();
     })
     .catch((error) => {
@@ -257,8 +237,6 @@ editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 avatarEditFormValidator.enableValidation();
 
-// Create and render card
-
 //Preview Popup Const
 
 const imagePreviewPopup = new PopupWithImage("#preview-image-modal");
@@ -276,4 +254,3 @@ addNewCardButton.addEventListener("click", () => {
   addFormValidator.toggleButtonState();
   addCardPopup.open();
 });
-cardCloseButton.addEventListener("click", () => addCardPopup.close());
