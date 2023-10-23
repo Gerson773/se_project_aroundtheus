@@ -31,9 +31,9 @@ class Popup {
       }
     });
 
-    this._popupElementCloseBtn.addEventListener("click", () => {
-      this.close();
-    });
+    // this._popupElementCloseBtn.addEventListener("click", () => {
+    //   this.close();
+    // });
   }
 }
 

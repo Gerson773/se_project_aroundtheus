@@ -73,6 +73,31 @@
   opacity: 0.6;
 }
 
+.profile__container {
+  position: relative;
+  margin: 0px;
+}
+
+.profile__avatar-button {
+  background-color: #000;
+  position: absolute;
+  border-style: none;
+  cursor: pointer;
+  background: transparent url(../images/pencil-icon.svg) center no-repeat;
+  background-size: 26px;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -50%);
+}
+
+.profile__avatar-button:hover {
+  opacity: 0.6;
+}
+
 .profile__image {
   height: 120px;
   width: 120px;
