@@ -249,7 +249,6 @@ function handleCardClick(name, link) {
 /*Event Listeners*/
 
 profileEditButton.addEventListener("click", openProfileForm);
-profileCloseButton.addEventListener("click", () => editProfilePopup.close());
 addNewCardButton.addEventListener("click", () => {
   addFormValidator.toggleButtonState();
   addCardPopup.open();
